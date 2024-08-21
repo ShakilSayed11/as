@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Sheets Export</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <h1>Export Google Sheets Data</h1>
+  <form action="/export" method="POST">
+    <label for="date">Date:</label>
+    <input type="text" id="date" name="date" required><br>
+    <label for="department">Department:</label>
+    <input type="text" id="department" name="department" required><br>
+    <label for="region">Region:</label>
+    <input type="text" id="region" name="region" required><br>
+    <label for="agent">Agent:</label>
+    <input type="text" id="agent" name="agent" required><br>
+    <button type="submit">Export Data</button>
+  </form>
+</body>
+</html>
