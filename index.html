@@ -1,0 +1,55 @@
+<!-- Main Content -->
+<div class="container">
+    <h1>Welcome to the Admin Report Console</h1>
+    <p>Select a date range to download the report:</p>
+    <div class="date-button-container">
+        <label for="fromDate">From:</label>
+        <input type="date" id="fromDate" placeholder="From Date">
+
+        <label for="toDate">To:</label>
+        <input type="date" id="toDate" placeholder="To Date">
+
+        <button class="button-30" role="button" id="downloadExcel">Download Report</button>
+    </div>
+</div>
+
+<script>
+    document.getElementById('downloadExcel').addEventListener('click', function () {
+        var fromDate = document.getElementById('fromDate').value;
+        var toDate = document.getElementById('toDate').value;
+        
+        if (!fromDate || !toDate) {
+            alert('Please select both From and To dates.');
+            return;
+        }
+
+        // Sample payload
+        const payload = {
+            fromDate: fromDate,
+            toDate: toDate,
+            selectedDepartments: ['all'],
+            selectedWorkingRegions: ['all']
+        };
+
+        // Make a POST request to the back-end server
+        fetch('http://localhost:3000/api/report', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(response => response.blob())
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = `Report_${fromDate}_to_${toDate}.xlsx`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => console.error('Error:', error));
+    });
+</script>
